@@ -1,0 +1,84 @@
+{
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "license": "GPL-3.0",
+  "author": "Marcos Bião <dev.marcosdly@gmail.com> (https://marcosdly.dev)",
+  "engines": {
+    "node": ">=20 <21"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@flaticon/flaticon-uicons": "3.3.1",
+    "@fontsource/sono": "5.0.21",
+    "preact": "10.22.1",
+    "preact-iso": "2.6.3",
+    "uuid": "10.0.0"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "2.9.0",
+    "eslint": "8.57.0",
+    "eslint-config-preact": "1.4.0",
+    "postcss": "8.4.43",
+    "postcss-combine-duplicated-selectors": "10.0.3",
+    "postcss-load-config": "6.0.1",
+    "prettier": "3.3.3",
+    "sass": "1.77.8",
+    "typescript": "5.5.4",
+    "vite": "5.3.3",
+    "vite-plugin-minify": "2.0.0"
+  },
+  "eslintConfig": {
+    "extends": "preact",
+    "plugins": [
+      "@babel"
+    ],
+    "env": {
+      "browser": true,
+      "es2018": true
+    },
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "globalReturn": false,
+        "impliedStrict": true
+      }
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 88
+  },
+  "vite": {
+    "default": {
+      "plugins": [
+        "@preact/preset-vite"
+      ],
+      "build": {
+        "assetsDir": "",
+        "target": "es2018",
+        "modulePreload": {
+          "polyfill": false
+        },
+        "sourcemap": true
+      }
+    },
+    "production": {
+      "plugins": [
+        "vite-plugin-minify"
+      ],
+      "build": {
+        "minify": "esbuild",
+        "cssMinify": "esbuild",
+        "sourcemap": false
+      },
+      "esbuild": {
+        "legalComments": "none"
+      }
+    }
+  }
+}
