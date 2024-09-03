@@ -1,0 +1,7 @@
+$max-phone-width: 800px;
+
+@mixin phone {
+  @media screen and (max-width: $max-phone-width) {
+    @content;
+  }
+}

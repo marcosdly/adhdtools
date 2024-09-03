@@ -1,0 +1,9 @@
+@mixin zero-height {
+  .fi {
+    display: contents;
+
+    &::before {
+      line-height: 0;
+    }
+  }
+}
