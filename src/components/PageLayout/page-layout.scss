@@ -1,0 +1,22 @@
+@use '../../style/screens' as screen;
+
+#page-layout-container {
+  background-color: var(--light);
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#page-layout {
+  border: 1px solid var(--neutral);
+  width: screen.$max-phone-width;
+  height: calc(screen.$max-phone-width * 0.75); // 3:4 aspect ratio
+
+  @include screen.phone {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 0;
+  }
+}
