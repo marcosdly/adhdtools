@@ -1,0 +1,40 @@
+@use '../../style/icons' as icons;
+
+.navbar {
+  & {
+    min-width: 15%;
+    height: 100%;
+    border-right: 1px solid var(--neutral);
+    display: inline-block;
+  }
+
+  .link {
+    & {
+      color: var(--neutral);
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      column-gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    &:hover,
+    .active {
+      background-color: var(--neutral);
+      color: var(--light);
+    }
+
+    // consistent vertical centering
+    @include icons.zero-height;
+
+    i {
+      font-size: 14pt;
+    }
+
+    p {
+      font-size: 13pt;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+  }
+}
