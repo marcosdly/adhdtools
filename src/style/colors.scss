@@ -1,0 +1,51 @@
+// See: https://paperheartdesign.com/blog/color-palette-peaceful-palettes
+
+@mixin purple {
+  --light: #e7c8e7;
+  --dark: #4c2f6f;
+  --darker: #0d0b33;
+  --emphasis: #c266a7;
+  --neutral: #52489f;
+}
+
+@mixin blue {
+  --light: #daeaf7;
+  --dark: #010e54;
+  --darker: #00022b;
+  --emphasis: #4fa5d8;
+  --neutral: #0855b1;
+}
+
+@mixin green {
+  // teal tone
+  --light: #d0d6d6;
+  --dark: #042630;
+  --darker: #041421;
+  --emphasis: #86b9b0;
+  --neutral: #4c7273;
+}
+
+@mixin yellow {
+  // champagne tone
+  --light: #d6cfbf;
+  --dark: #725e45;
+  --darker: #4e4d49;
+  --emphasis: #e2c58d;
+  --neutral: #b7946a;
+}
+
+.color-comforting {
+  @include green;
+}
+
+.color-calm {
+  @include blue;
+}
+
+.color-peaceful {
+  @include purple;
+}
+
+.color-confident {
+  @include yellow;
+}

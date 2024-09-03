@@ -1,0 +1,11 @@
+@import '../node_modules/@fontsource/sono/400.css';
+@import '../node_modules/@fontsource/sono/600.css';
+
+* {
+  font-family: 'Sono', sans-serif;
+  font-weight: 400;
+}
+
+.text-bold {
+  font-weight: 600;
+}
