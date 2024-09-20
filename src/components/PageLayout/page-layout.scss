@@ -9,6 +9,10 @@
 }
 
 #page-layout {
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-template-rows: auto min-content;
+
   border: 1px solid var(--neutral);
   width: screen.$max-phone-width;
   height: calc(screen.$max-phone-width * 0.75); // 3:4 aspect ratio
