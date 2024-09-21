@@ -40,6 +40,7 @@ class Oscilator {
     this.context = new AudioContext();
     this.oscilator = this.context.createOscillator();
     this.gain = this.context.createGain();
+    this.currentGain = this.defaultGain;
 
     this.oscilator.connect(this.gain);
     this.gain.connect(this.context.destination);
@@ -67,11 +68,11 @@ class Oscilator {
     if (volume < 0) gainValue = 0;
     if (volume > 1) gainValue = 1;
 
-    this.gain.gain.setValueAtTime(gainValue, this.context.currentTime);
+    this.currentGain = gainValue;
   }
 
   start(volume) {
-    this.gain.gain.setValueAtTime(volume ?? this.defaultGain, this.context.currentTime);
+    this.gain.gain.setValueAtTime(this.currentGain, this.context.currentTime);
   }
 
   #mute() {
@@ -105,7 +106,8 @@ function Volume(props) {
     const volume = 0.01 * percentage;
     source.current.valueAsNumber = percentage;
     target.current.valueAsNumber = percentage;
-    if (props.oscilator.current) props.oscilator.current.setGain(volume);
+    if (!props.oscilator.current) props.oscilator.current = new Oscilator();
+    props.oscilator.current.setGain(volume);
   }
 
   const options = {
