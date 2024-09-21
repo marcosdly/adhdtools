@@ -5,6 +5,11 @@ const defaultFrequency = 440;
 /** @typedef {import('preact').RefObject<HTMLInputElement>} InputRefObject */
 /** @typedef {import('preact').RefObject<Oscilator>} OscilatorRefObject */
 
+/**
+ * @typedef OscilatorReference
+ * @property {OscilatorRefObject} oscilator
+ */
+
 function createOscillator({ frequency, type }) {
   const context = new AudioContext();
   const oscilator = context.createOscillator();
@@ -84,12 +89,7 @@ class Oscilator {
   }
 }
 
-/**
- * @typedef VolumeProps
- * @property {OscilatorRefObject} oscilator
- */
-
-/** @param {VolumeProps} props */
+/** @param {OscilatorReference} props */
 function Volume(props) {
   const volumeId = useId();
   /** @type {InputRefObject} */
@@ -137,6 +137,31 @@ function Volume(props) {
   );
 }
 
+/** @param {OscilatorReference} props */
+function Frequency(props) {
+  const hzId = useId();
+
+  function updateFrequency(ev) {
+    if (!props.oscilator.current) props.oscilator.current = new Oscilator();
+    props.oscilator.current.setFrequency(ev.target.valueAsNumber);
+  }
+
+  return (
+    <div>
+      <input
+        type="number"
+        id={hzId}
+        className="input"
+        defaultValue={defaultFrequency}
+        min={50}
+        max={20_000}
+        onChange={updateFrequency}
+      />
+      <label htmlFor={hzId}>Hz</label>
+    </div>
+  );
+}
+
 export default function Tone() {
   /*
     TODO
@@ -146,27 +171,11 @@ export default function Tone() {
         - recommended frequencies
         - wave representation (maybe)
     */
-  const hzId = useId();
-
   const audio = useRef(undefined);
 
   function setWaveType(waveType) {
     if (audio.current) audio.current.setType(waveType);
   }
-
-  const input = (
-    <div>
-      <input
-        type="number"
-        id={hzId}
-        className="input"
-        defaultValue={defaultFrequency}
-        min={50}
-        max={20_000}
-      />
-      <label htmlFor={hzId}>Hz</label>
-    </div>
-  );
 
   const controls = (
     <div>
@@ -201,7 +210,7 @@ export default function Tone() {
 
   return (
     <div className="page">
-      {input}
+      <Frequency oscilator={audio} />
       <Volume oscilator={audio} />
       {controls}
       {outputConfiguration}
