@@ -2,6 +2,9 @@ import { useEffect, useId, useRef } from 'preact/hooks';
 
 const defaultFrequency = 440;
 
+/** @typedef {import('preact').RefObject<HTMLInputElement>} InputRefObject */
+/** @typedef {import('preact').RefObject<Oscilator>} OscilatorRefObject */
+
 function createOscillator({ frequency, type }) {
   const context = new AudioContext();
   const oscilator = context.createOscillator();
@@ -61,7 +64,8 @@ class Oscilator {
   /** @param {number} volume gain factor ranging `0 <= x <= 1` */
   setGain(volume) {
     let gainValue = volume;
-    if (volume < 0 || volume > 1) gainValue = 0;
+    if (volume < 0) gainValue = 0;
+    if (volume > 1) gainValue = 1;
 
     this.gain.gain.setValueAtTime(gainValue, this.context.currentTime);
   }
@@ -79,6 +83,58 @@ class Oscilator {
   }
 }
 
+/**
+ * @typedef VolumeProps
+ * @property {OscilatorRefObject} oscilator
+ */
+
+/** @param {VolumeProps} props */
+function Volume(props) {
+  const volumeId = useId();
+  /** @type {InputRefObject} */
+  const inputRef = useRef();
+  /** @type {InputRefObject} */
+  const rangeRef = useRef();
+
+  /**
+   * @param {InputRefObject} source
+   * @param {InputRefObject} target
+   */
+  function updateInputRef(source, target) {
+    const percentage = source.current.valueAsNumber;
+    const volume = 0.01 * percentage;
+    source.current.valueAsNumber = percentage;
+    target.current.valueAsNumber = percentage;
+    if (props.oscilator.current) props.oscilator.current.setGain(volume);
+  }
+
+  const options = {
+    step: 5,
+    min: 0,
+    max: 100,
+    defaultValue: 20,
+  };
+
+  return (
+    <div>
+      <label htmlFor={volumeId}>Volume</label>
+      <input
+        type="range"
+        id={volumeId}
+        ref={rangeRef}
+        {...options}
+        onChange={() => updateInputRef(rangeRef, inputRef)}
+      />
+      <input
+        type="number"
+        ref={inputRef}
+        {...options}
+        onChange={() => updateInputRef(inputRef, rangeRef)}
+      />
+    </div>
+  );
+}
+
 export default function Tone() {
   /*
     TODO
@@ -90,7 +146,6 @@ export default function Tone() {
     */
   const hzId = useId();
 
-  /** @type {import('preact').RefObject<Oscilator>} */
   const audio = useRef(undefined);
 
   function setWaveType(waveType) {
@@ -145,6 +200,7 @@ export default function Tone() {
   return (
     <div className="page">
       {input}
+      <Volume oscilator={audio} />
       {controls}
       {outputConfiguration}
     </div>
