@@ -1,0 +1,29 @@
+
+$ad-banner-width: 728px;
+$ad-banner-height: 90px;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+#root {
+  width: inherit;
+  height: inherit;
+}
+
+#structure-wrapper {
+  width: $ad-banner-width;
+}
+
+#promotion-placement {
+  width: $ad-banner-width;
+  height: $ad-banner-height;
+}
+
