@@ -3,4 +3,3 @@ telemetry = false
 [install]
 exact = true
 saveTextLockfile = false
-frozenLockfile = true
