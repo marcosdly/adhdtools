@@ -1,0 +1,16 @@
+{
+  "name": "adhdtools",
+  "module": "src/index.js",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "cordova": "12.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "5.0.0"
+  },
+  "prettier": {
+    "printWidth": 88
+  }
+}
